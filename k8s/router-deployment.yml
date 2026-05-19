@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: router-deployment
+  labels:
+    name: router-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: router
+  template:
+    metadata:
+      labels:
+        app: router
+    spec:
+      containers:
+        - name: router-container
+          image: router:latest
+          resources:
+            requests:
+              cpu: "250m"      # Lowered to fit under the limit
+              memory: "250Mi"   # Lowered to fit under the limit
+            limits:
+              cpu: "500m"      # Raised to accommodate the peak load
+              memory: "500Mi"  # Raised to accommodate the peak load
+          livenessProbe:
+            httpGet:
+              path: /api/status/healthz
+              port: 3000
+            initialDelaySeconds: 90
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/status/readyz
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          ports:
+            - containerPort: 3000
+              name: my-name

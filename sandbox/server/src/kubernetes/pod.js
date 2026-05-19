@@ -16,6 +16,7 @@ export async function createPod(sandboxId) {
                     name: `sandbox-container`,
                     image: "tamplate",
                     imagePullPolicy: "IfNotPresent",
+                    args: ["--host", "0.0.0.0"],
                     ports: [
                         {
                             containerPort: 5173,
@@ -25,11 +26,11 @@ export async function createPod(sandboxId) {
                     resources:{
                         limits:{
                             cpu:'500m',
-                            memory:'128Mi'
+                            memory:'512Mi'
                         },
                         requests:{
                             cpu:'250m',
-                            memory:'64Mi'
+                            memory:'250Mi'
                         }
                     }
                 }
