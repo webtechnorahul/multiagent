@@ -13,17 +13,24 @@ app.get("/api/status/readyz",(req,res)=>{
     res.status(200).json({status:"ready"});
 })
 
+const proxies={}
+
+function getProxy(sandboxid){
+    if(!proxies[sandboxid]){
+        const target=`http://sandbox-service-${sandboxid}`;
+        proxies[sandboxid]=createProxyMiddleware({
+        target,
+        changeOrigin:true,
+        ws:true
+    })
+    }
+    return proxies[sandboxid];
+}
 app.use((req,res,next)=>{
     const host=req.headers.host;
     const sandboxid=host.split(".")[0];
 
-    const target=`http://sandbox-service-${sandboxid}`;
-
-    return createProxyMiddleware({
-        target,
-        changeOrigin:true,
-        ws:true
-    })(req,res,next);
+    return getProxy(sandboxid)(req,res,next);
 
 })
 

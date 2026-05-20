@@ -7,6 +7,6 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: 'all', // Fixed typo and changed value to 'all'
+    allowedHosts: true, // Fixed typo and changed value to 'all'
   }
 })
