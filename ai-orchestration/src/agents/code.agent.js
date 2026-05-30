@@ -7,7 +7,7 @@ console.log("agent working")
 const model=new ChatMistralAI({
     apikey:process.env.MISTRAL_API_KEY,
     model:"mistral-medium-latest",
-    temperature:0,
+    temperature:0.7,
 })
 
 const agent=createAgent({
@@ -15,11 +15,13 @@ const agent=createAgent({
     tools:[listFiles,readFiles,updateFiles]
 })
 
-await agent.invoke({
-    messages:[
-        {
-            role:"user",
-            content:"create a snake game in app.jsx file you use html,css and js"
-        }
-    ]
-})
+// await agent.invoke({
+//     messages:[
+//         {
+//             role:"user",
+//             content:"create a snake game in app.jsx file you use html,css and js"
+//         }
+//     ]
+// })
+
+export default agent;

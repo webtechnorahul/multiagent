@@ -8,5 +8,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     allowedHosts: true, // Fixed typo and changed value to 'all'
+  },
+  watch: {
+    usePolling: true,
+    interval: 300,
+    ignore: ['node_modules/**', 'dist/**'],
   }
 })
